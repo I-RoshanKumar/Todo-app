@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>MytOdo</title>
+
+    <link href="./css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <%- include('header.ejs') %>
+    <table>
+      <% for(var i=0; i< allTodos.length;i++) {%>
+      <tr>
+        <td><%= allTodos[i].title %></td>
+      </tr>
+      <% } %>
+    </table>
+  </body>
+</html>
