@@ -1,4 +1,5 @@
 body {
-  color: red;
+  background-color: rgb(red, green, blue);
+  
   font-family: "Courier New", Courier, monospace;
 }

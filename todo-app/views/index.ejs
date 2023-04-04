@@ -3,18 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>MytOdo</title>
+    <title>My todo Manager</title>
 
     <link href="./css/style.css" rel="stylesheet" />
+    <script src="./js/script.js"></script>
   </head>
   <body>
     <%- include('header.ejs') %>
-    <table>
-      <% for(var i=0; i< allTodos.length;i++) {%>
-      <tr>
-        <td><%= allTodos[i].title %></td>
-      </tr>
-      <% } %>
-    </table>
+   <br />
+   <%- include("todos.ejs") %> <%- include("footer.ejs") %>
   </body>
 </html>
