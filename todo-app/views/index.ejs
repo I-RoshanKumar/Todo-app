@@ -4,14 +4,148 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>My todo Manager</title>
-
-    <link href="./css/style.css" rel="stylesheet" />
-    <br>
-    <script src="./js/script.js"></script>
+    <link href="/css/styles.css" rel="stylesheet" />
+    <script src="/js/script.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <%- include('header.ejs') %>
-   <br />
-   <%- include("todos.ejs") %> <%- include("footer.ejs") %>
+    <div class="grid grid-cols-6">
+      <div class="col-start-3 col-span-2">
+        <%- include('header.ejs') %>
+        <form>
+          <div class="flex gap-2 py-4">
+            <div class="flex-auto">
+              <input
+                type="text"
+                placeholder="What's next??"
+                class="border border-gray-300 rounded text-gray-900 w-full p-2 text-sm"
+                required
+              />
+            </div>
+            <div class="flex-auto">
+              <input
+                type="date"
+                class="border border-gray-300 rounded text-gray-900 w-full p-2 text-sm leading-4"
+              />
+            </div>
+            <div class="flex-none">
+              <button
+                type="Submit"
+                class="bg-green-600 text-white px-5 py-1.5 rounded font-medium mr-2 mb-2"
+              >
+                Add
+              </button>
+            </div>
+          </div>
+        </form>
+        <div>
+          <h5>OverDue</h5>
+          <ul class="list-none">
+            <li>
+              <div
+                class="flex items-center w-fit my-2 px-2 py-1 rounded hover:bg-purple-100"
+              >
+                <input
+                  id="todo-checkbox-1"
+                  type="checkbox"
+                  class="w-4 text-blue-600 bg-gray-100 rounded border-green-600"
+                />
+                <label
+                  for="todo-checkbox-1"
+                  class="ml-2 text-sm text-gray-600 cursor-pointer"
+                  >Have to pay electricity bil</label
+                >
+              </div>
+            </li>
+            <li>
+              <div
+                class="flex items-center w-fit my-2 px-2 py-1 rounded hover:bg-purple-100"
+              >
+                <input
+                  id="todo-checkbox-2"
+                  type="checkbox"
+                  class="w-4 text-blue-600 bg-gray-100 rounded border-green-600"
+                />
+                <label
+                  for="todo-checkbox-2"
+                  class="ml-2 text-sm text-gray-600 cursor-pointer"
+                  >Recharge Mobile Phone</label
+                >
+              </div>
+            </li>
+          </ul>
+          <h5>Due today</h5>
+          <ul class="list-none">
+            <li>
+              <div
+                class="flex items-center w-fit my-2 px-2 py-1 rounded hover:bg-purple-100"
+              >
+                <input
+                  id="todo-checkbox-3"
+                  type="checkbox"
+                  class="w-4 text-blue-600 bg-gray-100 rounded border-green-600"
+                />
+                <label
+                  for="todo-checkbox-3"
+                  class="ml-2 text-sm text-gray-600 cursor-pointer"
+                  >Have the course completed</label
+                >
+              </div>
+            </li>
+            <li>
+              <div
+                class="flex items-center w-fit my-2 px-2 py-1 rounded hover:bg-purple-100"
+              >
+                <input
+                  id="todo-checkbox-4"
+                  type="checkbox"
+                  class="w-4 text-blue-600 bg-gray-100 rounded border-green-600"
+                />
+                <label
+                  for="todo-checkbox-4"
+                  class="ml-2 text-sm text-gray-600 cursor-pointer"
+                  >Repair Mobile Phone</label
+                >
+              </div>
+            </li>
+          </ul>
+          <h5>Due Later</h5>
+          <ul class="list-none">
+            <li>
+              <div
+                class="flex items-center w-fit my-2 px-2 py-1 rounded hover:bg-purple-100"
+              >
+                <input
+                  id="todo-checkbox-5"
+                  type="checkbox"
+                  class="w-4 text-blue-600 bg-gray-100 rounded border-green-600"
+                />
+                <label
+                  for="todo-checkbox-5"
+                  class="ml-2 text-sm text-gray-600 cursor-pointer"
+                  >Have to pay internet bil</label
+                >
+              </div>
+            </li>
+            <li>
+              <div
+                class="flex items-center w-fit my-2 px-2 py-1 rounded hover:bg-purple-100"
+              >
+                <input
+                  id="todo-checkbox-6"
+                  type="checkbox"
+                  class="w-4 text-blue-600 bg-gray-100 rounded border-green-600"
+                />
+                <label
+                  for="todo-checkbox-6"
+                  class="ml-2 text-sm text-gray-600 cursor-pointer"
+                  >Car servicing</label
+                >
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
