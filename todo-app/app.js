@@ -51,7 +51,7 @@ app.get("/todos/:id", async function (request, response) {
 app.post("/todos", async (request, response) => {
   console.log("Creating a todo", request.body);
   try {
-    const todo = await Todo.addTodo({
+     await Todo.addTodo({
       title: request.body.title,
       dueDate: request.body.dueDate,
     });
