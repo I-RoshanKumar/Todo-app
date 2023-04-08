@@ -32,19 +32,6 @@ app.get("/", async (request, response) => {
 
 app.set("view engine", "ejs");
 
-app.get("/", async (request, response) => {
-  const allTodos = await Todo.getTodos();
-  if (request.accepts("html")) {
-    response.render("index", {
-      allTodos,
-    });
-  } else {
-    response.json({
-      allTodos,
-    });
-  }
-});
-
 app.get("/todos", async (request, response) => {
   try {
     const todos = await Todo.findAll({ order: [["id", "ASC"]] });
@@ -75,6 +62,7 @@ app.post("/todos", async (request, response) => {
     await Todo.addTodo({
       title: request.body.title,
       dueDate: request.body.dueDate,
+      completed: false,
     });
     return response.redirect("/");
   } catch (error) {
@@ -98,7 +86,7 @@ app.delete("/todos/:id", async (request, response) => {
   console.log("We have to delete a Todo with ID: ", request.params.id);
   try {
     await Todo.remove(request.params.id);
-    return Todo.remove.json({ success: true });
+    return response.send(true);
   } catch (error) {
     return response.status(422).json(error);
   }
