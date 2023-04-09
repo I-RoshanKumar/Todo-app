@@ -1,12 +1,16 @@
 const express = require("express");
+var csurf = require("csurf");
 const app = express();
 const { Todo } = require("./models");
 const bodyParser = require("body-parser");
+var cookeParser = require("cookie-parser");
 const path = require("path");
 const { response } = require("express");
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname + "/public")));
+app.use(cookeParser("shh! some secret string"));
+app.use(csurf({ cookie: true }));
 //app.use(express.static("public"));
 
 const { Todos } = require("./models");
@@ -20,12 +24,14 @@ app.get("/", async (request, response) => {
       overdue,
       dueToday,
       dueLater,
+      csrfToken: request.csrfToken(),
     });
   } else {
     response.json({
       overdue,
       dueToday,
       dueLater,
+      csrfToken: request.csrfToken(),
     });
   }
 });
@@ -35,10 +41,10 @@ app.set("view engine", "ejs");
 app.get("/todos", async (request, response) => {
   try {
     const todos = await Todo.findAll({ order: [["id", "ASC"]] });
-    return res.json(todos);
+    return response.json(todos);
   } catch (error) {
     console.log(error);
-    return res.status(422).json(error);
+    return response.status(422).json(error);
   }
 });
 // FILL IN YOUR CODE HERE

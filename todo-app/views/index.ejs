@@ -3,15 +3,25 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>My todo Manager</title>
-    <link href="/css/styles.css" rel="stylesheet" />
-    <script src="/js/script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="<%=csrfToken %>"/>
+    <link href="./css/styles.css" rel="stylesheet" />
+    <script src="./js/script.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+
+      var token = document
+      .querySelector('meta[name="csrf-token"]')
+      .getAttribute("content");
       function updateTodo(id) {
-        fetch(`/todos/${id}/markAsCompleted`, {
+        const status = document.getElementById(`todo-checkbox-${id}`).checked;        
+        fetch(`/todos/${id}`, {
           method: "put",
           headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            completed:status,
+            _csrf: token
+          }),
         })
           .then((res) => {
             if (res.ok) {
@@ -24,6 +34,10 @@
         fetch(`/todos/${id}`, {
           method: "delete",
           headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            completed:status,
+            _csrf: token
+          }),
         })
           .then((res) => {
             if (res.ok) {
@@ -33,12 +47,16 @@
           .catch((err) => console.error(err));
       }
     </script>
+    <title>
+      <%= title %>
+    </title>
   </head>
   <body>
     <div class="grid grid-cols-6">
       <div class="col-start-3 col-span-2">
         <%- include('header.ejs') %>
         <form action="/todos" method="post">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
           <div class="flex gap-2 py-4">
             <div class="flex-auto">
               <input
@@ -67,6 +85,7 @@
             </div>
           </div>
         </form>
+        
 
         
 <%/* Due today starts from here */%>
@@ -129,13 +148,13 @@
   <h5 style="display: inline">dueToday</h5>
   <span
     style="display: inline"
-    id="count-overdue"
+    id="count-dueToday"
     class="bg-gray-200 text-black px-3 py-1 rounded font-medium mr-2 mb-2"
     ><%- dueToday.length %></span
   >
 </div>
 
-           <% for( let j = 0; j< dueToday.length; j++) { %>
+           <% for( let i = 0; i< dueToday.length; i++) { %>
           <div class="Todo-Item">
             <div
               class="flex items-center w-fit my-2 px-2 py-1 rounded hover:bg-purple-100"
@@ -148,12 +167,12 @@
               <label
                 for="todo-checkbox-2"
                 class="ml-2 text-sm text-gray-600 cursor-pointer"
-                ><%- dueToday[j].title %></label
+                ><%- dueToday[i].title %></label
               >
               <a
                 href="#"
                 class="hidden trash-icon ml-2"
-                onclick="deleteTodo('<%= dueToday[j].id %>')"
+                onclick="deleteTodo('<%= dueToday[i].id %>')"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -184,13 +203,13 @@
              <h5 style="display: inline">dueLater</h5>
               <span
                  style="display: inline"
-                 id="count-overdue"
+                 id="count-dueLater"
                  class="bg-gray-200 text-black px-3 py-1 rounded font-medium mr-2 mb-2"
     ><%- dueLater.length %></span
   >
 </div>
 
-   <% for( let j = 0; j< dueLater.length; j++) { %>
+   <% for( let i = 0; i< dueLater.length; i++) { %>
     <div class="Todo-Item">
       <div
         class="flex items-center w-fit my-2 px-2 py-1 rounded hover:bg-purple-100"
@@ -203,12 +222,12 @@
         <label
           for="todo-checkbox-3"
           class="ml-2 text-sm text-gray-600 cursor-pointer"
-          ><%- dueLater[j].title %></label
+          ><%- dueLater[i].title %></label
         >
         <a
           href="#"
           class="hidden trash-icon ml-2"
-          onclick="deleteTodo('<%= dueLater[j].id %>')"
+          onclick="deleteTodo('<%= dueLater[i].id %>')"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

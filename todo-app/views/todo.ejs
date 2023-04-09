@@ -9,18 +9,18 @@
         class="flex items-center w-fit ml-2 py-1 px-2 my-1 todoItem bg-rounded hover:bg-purple-100"
       >
         <input type="checkbox" id="checkbox-<%= data[i].id %>" <%=
-        data[i].completed ?"checked" : "" %> onclick="updateTodo(<%= data[i].id
+        data[i].completed ? "checked" : "" %> onclick="updateTodo(<%= data[i].id
         %>)" class="w-4 h-4 bg-gray-100 text-blue-100" />
         <label
           for="checkbox-<%= data[i].id %>"
           class="ml-2 text-sm text-gray-600 curser-pointer"
         >
-          <%= data[i].title %>
+          <%- data[i].title %>
         </label>
         <a
           href="#"
           class="hidden trash-icon ml-2"
-          onclick="deleteTodo(<%= data[i].id %>)"
+          onclick="deleteTodo('<%= data[i].id %>')"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
