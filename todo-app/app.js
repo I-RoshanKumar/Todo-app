@@ -1,5 +1,5 @@
 const express = require("express");
-var csurf = require("csurf");
+var csrf = require("tiny-csrf");
 const app = express();
 const { Todo } = require("./models");
 const bodyParser = require("body-parser");
@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname + "/public")));
 app.use(cookeParser("shh! some secret string"));
-app.use(csurf({ cookie: true }));
+app.use(csrf("this_should_be_32_character_long",["POST","PUT","DELETE"]));
 //app.use(express.static("public"));
 
 const { Todos } = require("./models");

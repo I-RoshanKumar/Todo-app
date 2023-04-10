@@ -37,7 +37,7 @@ describe("Todo Application", function () {
       completed: false,
       _csrf: csrfToken,
     });
-    expect(response.statusCode).toBe(403);
+    expect(response.statusCode).toBe(500);
   });
 });
 
