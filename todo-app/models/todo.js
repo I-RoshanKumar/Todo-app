@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     static getTodos() {
       return this.findAll({ order: [["id", "ASC"]] });
     }
-    static overdue() {
+    static async overdue() {
       return this.findAll({
         where: {
           dueDate: {
@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         order: [["id", "ASC"]],
       });
     }
-    static dueToday() {
+    static async dueToday() {
       return this.findAll({
         where: {
           dueDate: {

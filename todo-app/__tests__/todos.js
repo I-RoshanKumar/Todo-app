@@ -5,6 +5,7 @@ const app = require("../app");
 const { JSON } = require("sequelize");
 
 let server, agent;
+
 function extractCsrfToken(res) {
   let $ = cheeorio.load(res.text);
   return $("[name=_csrf]").val();
@@ -18,17 +19,12 @@ describe("Todo Application", function () {
   });
 
   afterAll(async () => {
-    try {
       await db.sequelize.close();
       await server.close();
-    } catch (error) {
-      console.log(error);
-    }
   });
 
-  jest.setTimeout(5000);
-
   test("Creates a todo and responds with json at /todos POST endpoint ", async () => {
+    const agent = request.agent(server);
     const res = await agent.get("/todos");
     const csrfToken = extractCsrfToken(res);
     const response = await agent.post("/todos").send({
@@ -42,9 +38,9 @@ describe("Todo Application", function () {
 });
 
 test("Marks a todo with the given ID as complete", async () => {
-  let res = await agent.get("/");
-  let csrfToken = extractCsrfToken(res);
-  const response = await agent.post("/todos").send({
+  const res = await agent.get("/");
+  const csrfToken = extractCsrfToken(res);
+  await agent.post("/todos").send({
     title: "Buy milk",
     dueDate: new Date().toISOString(),
     completed: false,
@@ -52,7 +48,7 @@ test("Marks a todo with the given ID as complete", async () => {
   });
 
   const groupedTodosResponse = await agent
-    .get("/")
+    .get("/todos")
     .set("Accept", "application/json");
   const parsedGroupResponse = JSON.parse(groupedTodosResponse.text);
   const dueTodaycount = parsedGroupResponse.dueToday.length;
@@ -63,9 +59,10 @@ test("Marks a todo with the given ID as complete", async () => {
   csrfToken = extractCsrfToken(res);
 
   const markCompleteResponse = await agent
-    .put(`/todos/${latestTodo.id}/markAsCompleted`)
+    .put(`/todos/${latestTodo.id}`)
     .send({
       _csrf: csrfToken,
+      completed: status,
     });
   const parsedUpdateResponse = JSON.parse(markCompleteResponse.text);
   expect(parsedUpdateResponse.completed).toBe(true);
